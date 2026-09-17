@@ -8,17 +8,25 @@ const productRoute = require("./Routes/productRoutes.js")
 const compass_string = process.env.mongoCompass_String 
 const atlas_string = process.env.mongoAtlas_String
 const port = process.env.PORT
+//MIDDLEWARE PROTECTION
+const jwt = require('jsonwebtoken');
+
+const app = express()
+
+
+app.use(express.json()); // Essential to read JSON from Postman
+
+// Temporary hardcoded secret (Replace with process.env.JWT_SECRET later)
+const JWT_SECRET = "your_super_secret_key_123"; 
+
 
 mongoose.connect(atlas_string)
     .then(() => console.log("MongoDB Connected"))
     .catch(err => console.error("Connection Error: ", err));
 
 
-const app = express()
 
 
-
-app.use(express.json())
 
 app.get("/", (req, res) => {
     res.send("server is active")
